@@ -1,0 +1,37 @@
+{
+    "version": "v1.6",
+    "name": "zava-mcp-agent01${{APP_NAME_SUFFIX}}",
+    "description": "Declarative agent created with Microsoft 365 Agents Toolkit can assist user in calling MCP Servers",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+			"title": "Sample conversation starters",
+			"text": "Hi! What can you do for me?"
+		}
+    ],
+    "capabilities": [
+        {
+            "name": "EmbeddedKnowledge",
+            "files": [
+                {
+                    "file": "EmbeddedKnowledge/Claims_Inspection_Guidelines.pdf"
+                },
+                {
+                    "file": "EmbeddedKnowledge/Pacific Water Restoration-Pricing.pdf"
+                },
+                {
+                    "file": "EmbeddedKnowledge/Thompson Roofing Solutions-Pricing.pdf"
+                },
+                {
+                    "file": "EmbeddedKnowledge/Wilson General Contractors-Pricing.pdf"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ]
+}
