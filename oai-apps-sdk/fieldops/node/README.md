@@ -34,6 +34,16 @@ The sample includes:
 
 - Node.js 20+ (or current LTS)
 - npm 10+
+- A **Mapbox public access token** (free tier is sufficient) — needed for the map and dispatch-plan widgets
+
+### Get a Mapbox access token
+
+1. Go to [https://account.mapbox.com/auth/signup/](https://account.mapbox.com/auth/signup/) and create a free Mapbox account (or sign in if you already have one).
+2. Navigate to **Account → Tokens**: [https://account.mapbox.com/access-tokens/](https://account.mapbox.com/access-tokens/).
+3. Copy your **Default public token** (starts with `pk.`).
+4. Open the following two widget files and replace `YOUR_MAPBOX_ACCESS_TOKEN` with your token:
+   - [`widgets/map.html`](widgets/map.html) — line 323
+   - [`widgets/dispatch-plan.html`](widgets/dispatch-plan.html) — line 315
 
 
 ## 5. Development (run locally + dev tunnel)
