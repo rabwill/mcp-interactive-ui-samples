@@ -34,7 +34,7 @@ The sample includes:
 
 - Node.js 20+ (or current LTS)
 - npm 10+
-- A **Mapbox public access token** (free tier is sufficient) — needed for the map and dispatch-plan widgets
+- A **Mapbox public access token** (free tier is sufficient to test) — needed for the map and dispatch-plan widgets
 
 ### Get a Mapbox access token
 
