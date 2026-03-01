@@ -109,7 +109,9 @@ Use the public HTTPS URL from ngrok and append `/mcp` for your MCP spec URL.
 3. Zip the [appPackage](appPackage) folder.
 4. Sideload the package into Teams.
 
-If you are customizing tool definitions (adding/updating tools), you can use M365 Agent Toolkit to create a declarative agent from your MCP server URL.
+   ![Sideload the package](demos/screenshots/sideload.png)
+
+If you are customizing tool definitions (adding/updating tools), you can use M365 Agents Toolkit to create a declarative agent from your MCP server URL. See [M365 Agents Toolkit Instructions](../../../M365-Agents-Toolkit-Instructions.md) for details.
 
 ## 6. Next steps
 
