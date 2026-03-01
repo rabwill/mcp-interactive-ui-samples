@@ -1,4 +1,4 @@
-# Interactive UI Samples for Microsoft 365 Copilot
+# MCP Based Interactive UI Samples for Microsoft 365 Copilot
 
 This repository contains sample MCP servers with rich interactive UI widgets that render inside Microsoft 365 Copilot. Use these samples to learn how to build declarative agents with visually rich tool responses.
 
