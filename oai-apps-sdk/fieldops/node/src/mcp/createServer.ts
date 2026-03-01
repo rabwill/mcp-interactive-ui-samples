@@ -26,7 +26,6 @@ const WIDGET_META: Record<string, WidgetMeta> = {
   list: { templateUri: TEMPLATE_URIS.list, invoking: "Finding new assignments\u2026", invoked: "New assignments ready." },
   map: { templateUri: TEMPLATE_URIS.map, invoking: "Loading map\u2026", invoked: "Map is ready." },
   plan: { templateUri: TEMPLATE_URIS.plan, invoking: "Building dispatch plan\u2026", invoked: "Dispatch plan ready." },
-  confirmation: { templateUri: TEMPLATE_URIS.confirmation, invoking: "Committing assignments\u2026", invoked: "Assignments committed." },
 };
 
 function widgetDescriptorMeta(meta: WidgetMeta) {
@@ -77,17 +76,6 @@ export function createMcpServer(): McpServer {
         mimeType: WIDGET_MIME,
         text: loadWidget("dispatch-plan.html"),
         _meta: widgetDescriptorMeta(WIDGET_META.plan),
-      }
-    ]
-  }));
-
-  server.registerResource("dispatch-confirmation", TEMPLATE_URIS.confirmation, {}, async () => ({
-    contents: [
-      {
-        uri: TEMPLATE_URIS.confirmation,
-        mimeType: WIDGET_MIME,
-        text: loadWidget("confirmation.html"),
-        _meta: widgetDescriptorMeta(WIDGET_META.confirmation),
       }
     ]
   }));
@@ -418,7 +406,8 @@ export function createMcpServer(): McpServer {
         destructiveHint: false
       },
       _meta: {
-        ...widgetDescriptorMeta(WIDGET_META.confirmation),
+        "openai/toolInvocation/invoking": "Committing assignments\u2026",
+        "openai/toolInvocation/invoked": "Assignments committed.",
         "openai/visibility": "private"
       },
     },
@@ -447,13 +436,15 @@ export function createMcpServer(): McpServer {
 
       return {
         structuredContent: {
-          view: "confirmation",
           summary: `${rows.length} assignments confirmed`,
           count: rows.length,
           rows
         },
         content: [{ type: "text", text: `${rows.length} assignments have been confirmed.` }],
-        _meta: widgetInvocationMeta(WIDGET_META.confirmation),
+        _meta: {
+          "openai/toolInvocation/invoking": "Committing assignments\u2026",
+          "openai/toolInvocation/invoked": "Assignments committed.",
+        },
       };
     }
   );
