@@ -99,13 +99,13 @@
                         {
                             "name": "show-consultant-profile",
                             "title": "Show Consultant Profile",
-                            "description": "Display a detailed profile card for a specific consultant, including contact info, skills, certifications, roles, and current assignments.",
+                            "description": "Display a detailed profile card for a specific consultant (by ID or name), including contact info, skills, certifications, roles, and current assignments.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "consultantId": {
                                         "type": "string",
-                                        "description": "The ID of the consultant to view."
+                                        "description": "The ID or name (partial match, case-insensitive) of the consultant to view."
                                     }
                                 },
                                 "required": [
@@ -188,13 +188,13 @@
                         {
                             "name": "update-consultant",
                             "title": "Update Consultant",
-                            "description": "Update a single consultant's information (name, email, phone, skills, roles).",
+                            "description": "Update a single consultant's information (name, email, phone, skills, roles). The consultant can be identified by ID or name.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "consultantId": {
                                         "type": "string",
-                                        "description": "The ID of the consultant to update."
+                                        "description": "The ID or name (partial match, case-insensitive) of the consultant to update."
                                     },
                                     "name": {
                                         "type": "string",
@@ -237,7 +237,7 @@
                         {
                             "name": "bulk-update-consultants",
                             "title": "Bulk Update Consultants",
-                            "description": "Batch-update multiple consultant records at once.",
+                            "description": "Batch-update multiple consultant records at once. Consultants can be identified by ID or name.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
@@ -246,7 +246,7 @@
                                         "items": {
                                             "type": "string"
                                         },
-                                        "description": "Array of consultant IDs to update."
+                                        "description": "Array of consultant IDs or names (partial match, case-insensitive) to update."
                                     },
                                     "name": {
                                         "type": "string",
@@ -289,13 +289,13 @@
                         {
                             "name": "show-project-details",
                             "title": "Show Project Details",
-                            "description": "Display detailed information about a specific project including its assigned consultants and forecasted hours.",
+                            "description": "Display detailed information about a specific project (by ID or name) including its assigned consultants and forecasted hours.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "projectId": {
                                         "type": "string",
-                                        "description": "The project ID."
+                                        "description": "The project ID or name (partial match, case-insensitive)."
                                     }
                                 },
                                 "required": [
@@ -318,17 +318,17 @@
                         {
                             "name": "assign-consultant-to-project",
                             "title": "Assign Consultant to Project",
-                            "description": "Assign a single consultant to a project with a specified role, optional billing rate, and optional forecast hours.",
+                            "description": "Assign a single consultant to a project with a specified role, optional billing rate, and optional forecast hours. Both project and consultant can be identified by ID or name.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "projectId": {
                                         "type": "string",
-                                        "description": "The project ID to assign the consultant to."
+                                        "description": "The project ID or name (partial match, case-insensitive) to assign the consultant to."
                                     },
                                     "consultantId": {
                                         "type": "string",
-                                        "description": "The consultant ID to assign."
+                                        "description": "The consultant ID or name (partial match, case-insensitive) to assign."
                                     },
                                     "role": {
                                         "type": "string",
@@ -359,20 +359,20 @@
                         {
                             "name": "bulk-assign-consultants",
                             "title": "Bulk Assign Consultants",
-                            "description": "Assign multiple consultants to a project at once. Each assignment includes a role, optional billing rate, and optional forecast.",
+                            "description": "Assign multiple consultants to a project at once. Each assignment includes a role, optional billing rate, and optional forecast. Project and consultants can be identified by ID or name.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "projectId": {
                                         "type": "string",
-                                        "description": "The project ID to assign consultants to."
+                                        "description": "The project ID or name (partial match, case-insensitive) to assign consultants to."
                                     },
                                     "consultantIds": {
                                         "type": "array",
                                         "items": {
                                             "type": "string"
                                         },
-                                        "description": "Array of consultant IDs to assign."
+                                        "description": "Array of consultant IDs or names (partial match, case-insensitive) to assign."
                                     },
                                     "role": {
                                         "type": "string",
@@ -403,17 +403,17 @@
                         {
                             "name": "remove-assignment",
                             "title": "Remove Assignment",
-                            "description": "Remove a consultant's assignment from a project.",
+                            "description": "Remove a consultant's assignment from a project. Both project and consultant can be identified by ID or name.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
                                     "projectId": {
                                         "type": "string",
-                                        "description": "The project ID."
+                                        "description": "The project ID or name (partial match, case-insensitive)."
                                     },
                                     "consultantId": {
                                         "type": "string",
-                                        "description": "The consultant ID to remove from the project."
+                                        "description": "The consultant ID or name (partial match, case-insensitive) to remove from the project."
                                     }
                                 },
                                 "required": [

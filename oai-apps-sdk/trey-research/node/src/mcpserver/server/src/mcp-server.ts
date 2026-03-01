@@ -229,7 +229,7 @@ const profileInputSchema = {
   properties: {
     consultantId: {
       type: "string" as const,
-      description: "The ID of the consultant to view.",
+      description: "The ID or name (partial match, case-insensitive) of the consultant to view.",
     },
   },
   required: ["consultantId"],
@@ -271,7 +271,7 @@ const updateConsultantInputSchema = {
   properties: {
     consultantId: {
       type: "string" as const,
-      description: "The ID of the consultant to update.",
+      description: "The ID or name (partial match, case-insensitive) of the consultant to update.",
     },
     name: { type: "string" as const, description: "Updated name." },
     email: { type: "string" as const, description: "Updated email." },
@@ -297,7 +297,7 @@ const bulkUpdateInputSchema = {
     consultantIds: {
       type: "array" as const,
       items: { type: "string" as const },
-      description: "Array of consultant IDs to update.",
+      description: "Array of consultant IDs or names (partial match, case-insensitive) to update.",
     },
     name: { type: "string" as const, description: "New name for all." },
     email: { type: "string" as const, description: "New email for all." },
@@ -322,7 +322,7 @@ const projectDetailInputSchema = {
   properties: {
     projectId: {
       type: "string" as const,
-      description: "The project ID.",
+      description: "The project ID or name (partial match, case-insensitive).",
     },
   },
   required: ["projectId"],
@@ -334,11 +334,11 @@ const assignConsultantInputSchema = {
   properties: {
     projectId: {
       type: "string" as const,
-      description: "The project ID to assign the consultant to.",
+      description: "The project ID or name (partial match, case-insensitive) to assign the consultant to.",
     },
     consultantId: {
       type: "string" as const,
-      description: "The consultant ID to assign.",
+      description: "The consultant ID or name (partial match, case-insensitive) to assign.",
     },
     role: {
       type: "string" as const,
@@ -362,12 +362,12 @@ const bulkAssignInputSchema = {
   properties: {
     projectId: {
       type: "string" as const,
-      description: "The project ID to assign consultants to.",
+      description: "The project ID or name (partial match, case-insensitive) to assign consultants to.",
     },
     consultantIds: {
       type: "array" as const,
       items: { type: "string" as const },
-      description: "Array of consultant IDs to assign.",
+      description: "Array of consultant IDs or names (partial match, case-insensitive) to assign.",
     },
     role: {
       type: "string" as const,
@@ -391,11 +391,11 @@ const removeAssignmentInputSchema = {
   properties: {
     projectId: {
       type: "string" as const,
-      description: "The project ID.",
+      description: "The project ID or name (partial match, case-insensitive).",
     },
     consultantId: {
       type: "string" as const,
-      description: "The consultant ID to remove from the project.",
+      description: "The consultant ID or name (partial match, case-insensitive) to remove from the project.",
     },
   },
   required: ["projectId", "consultantId"],
@@ -532,7 +532,7 @@ export function createHRServer(): Server {
       name: "show-consultant-profile",
       title: "Show Consultant Profile",
       description:
-        "Display a detailed profile card for a specific consultant, including contact info, skills, certifications, roles, and current assignments.",
+        "Display a detailed profile card for a specific consultant (by ID or name), including contact info, skills, certifications, roles, and current assignments.",
       inputSchema: profileInputSchema,
       _meta: descriptorMeta(PROFILE_WIDGET),
       annotations: {
@@ -571,7 +571,7 @@ export function createHRServer(): Server {
       name: "update-consultant",
       title: "Update Consultant",
       description:
-        "Update a single consultant's information (name, email, phone, skills, roles).",
+        "Update a single consultant's information (name, email, phone, skills, roles). The consultant can be identified by ID or name.",
       inputSchema: updateConsultantInputSchema,
       annotations: {
         destructiveHint: true,
@@ -583,7 +583,7 @@ export function createHRServer(): Server {
       name: "bulk-update-consultants",
       title: "Bulk Update Consultants",
       description:
-        "Batch-update multiple consultant records at once.",
+        "Batch-update multiple consultant records at once. Consultants can be identified by ID or name.",
       inputSchema: bulkUpdateInputSchema,
       annotations: {
         destructiveHint: true,
@@ -595,7 +595,7 @@ export function createHRServer(): Server {
       name: "show-project-details",
       title: "Show Project Details",
       description:
-        "Display detailed information about a specific project including its assigned consultants and forecasted hours.",
+        "Display detailed information about a specific project (by ID or name) including its assigned consultants and forecasted hours.",
       inputSchema: projectDetailInputSchema,
       _meta: descriptorMeta(DASHBOARD_WIDGET),
       annotations: {
@@ -608,7 +608,7 @@ export function createHRServer(): Server {
       name: "assign-consultant-to-project",
       title: "Assign Consultant to Project",
       description:
-        "Assign a single consultant to a project with a specified role, optional billing rate, and optional forecast hours.",
+        "Assign a single consultant to a project with a specified role, optional billing rate, and optional forecast hours. Both project and consultant can be identified by ID or name.",
       inputSchema: assignConsultantInputSchema,
       annotations: {
         destructiveHint: false,
@@ -620,7 +620,7 @@ export function createHRServer(): Server {
       name: "bulk-assign-consultants",
       title: "Bulk Assign Consultants",
       description:
-        "Assign multiple consultants to a project at once. Each assignment includes a role, optional billing rate, and optional forecast.",
+        "Assign multiple consultants to a project at once. Each assignment includes a role, optional billing rate, and optional forecast. Project and consultants can be identified by ID or name.",
       inputSchema: bulkAssignInputSchema,
       annotations: {
         destructiveHint: false,
@@ -632,7 +632,7 @@ export function createHRServer(): Server {
       name: "remove-assignment",
       title: "Remove Assignment",
       description:
-        "Remove a consultant's assignment from a project.",
+        "Remove a consultant's assignment from a project. Both project and consultant can be identified by ID or name.",
       inputSchema: removeAssignmentInputSchema,
       annotations: {
         destructiveHint: true,
@@ -743,14 +743,15 @@ export function createHRServer(): Server {
         // ──── Consultant Profile ────
         case "show-consultant-profile": {
           const { consultantId } = profileParser.parse(args);
-          const consultant = await db.getConsultantById(consultantId);
+          const consultant = await db.resolveConsultant(consultantId);
           if (!consultant) {
             return {
-              content: [{ type: "text" as const, text: `Consultant ${consultantId} not found.` }],
+              content: [{ type: "text" as const, text: `Consultant "${consultantId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
-          const assignments = await db.getAssignmentsByConsultant(consultantId);
+          const resolvedConsultantId = consultant.rowKey;
+          const assignments = await db.getAssignmentsByConsultant(resolvedConsultantId);
           const allProjects = await db.getAllProjects();
           const projectMap = new Map(allProjects.map((p) => [p.rowKey, parseProject(p)]));
 
@@ -845,18 +846,20 @@ export function createHRServer(): Server {
         case "update-consultant": {
           const parsed = updateParser.parse(args);
           const { consultantId, ...updates } = parsed;
-          const updated = await db.updateConsultant(consultantId, updates);
-          if (!updated) {
+          const resolved = await db.resolveConsultant(consultantId);
+          if (!resolved) {
             return {
-              content: [{ type: "text" as const, text: `Consultant ${consultantId} not found.` }],
+              content: [{ type: "text" as const, text: `Consultant "${consultantId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
+          const resolvedId = resolved.rowKey;
+          const updated = await db.updateConsultant(resolvedId, updates);
           return {
             content: [
               {
                 type: "text" as const,
-                text: `Updated consultant ${updated.name} (ID: ${consultantId}).`,
+                text: `Updated consultant ${updated!.name} (ID: ${resolvedId}).`,
               },
             ],
           };
@@ -866,12 +869,17 @@ export function createHRServer(): Server {
         case "bulk-update-consultants": {
           const { consultantIds, ...changes } = bulkUpdateParser.parse(args);
           const results: string[] = [];
-          for (const consultantId of consultantIds) {
-            const updated = await db.updateConsultant(consultantId, changes);
+          for (const consultantIdOrName of consultantIds) {
+            const resolved = await db.resolveConsultant(consultantIdOrName);
+            if (!resolved) {
+              results.push(`✗ Consultant "${consultantIdOrName}" not found (searched by ID and name)`);
+              continue;
+            }
+            const updated = await db.updateConsultant(resolved.rowKey, changes);
             results.push(
               updated
                 ? `✓ Updated ${updated.name}`
-                : `✗ Consultant ${consultantId} not found`
+                : `✗ Consultant "${consultantIdOrName}" not found`
             );
           }
           return {
@@ -887,14 +895,15 @@ export function createHRServer(): Server {
         // ──── Project Details ────
         case "show-project-details": {
           const { projectId } = projectDetailParser.parse(args);
-          const project = await db.getProjectById(projectId);
+          const project = await db.resolveProject(projectId);
           if (!project) {
             return {
-              content: [{ type: "text" as const, text: `Project ${projectId} not found.` }],
+              content: [{ type: "text" as const, text: `Project "${projectId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
-          const assignments = await db.getAssignmentsByProject(projectId);
+          const resolvedProjectId = project.rowKey;
+          const assignments = await db.getAssignmentsByProject(resolvedProjectId);
           const allConsultants = await db.getAllConsultants();
           const consultantMap = new Map(allConsultants.map((c) => [c.rowKey, parseConsultant(c)]));
 
@@ -932,23 +941,23 @@ export function createHRServer(): Server {
         // ──── Assign Consultant to Project ────
         case "assign-consultant-to-project": {
           const parsed = assignConsultantParser.parse(args);
-          const project = await db.getProjectById(parsed.projectId);
+          const project = await db.resolveProject(parsed.projectId);
           if (!project) {
             return {
-              content: [{ type: "text" as const, text: `Project ${parsed.projectId} not found.` }],
+              content: [{ type: "text" as const, text: `Project "${parsed.projectId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
-          const consultant = await db.getConsultantById(parsed.consultantId);
+          const consultant = await db.resolveConsultant(parsed.consultantId);
           if (!consultant) {
             return {
-              content: [{ type: "text" as const, text: `Consultant ${parsed.consultantId} not found.` }],
+              content: [{ type: "text" as const, text: `Consultant "${parsed.consultantId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
           await db.createAssignment({
-            projectId: parsed.projectId,
-            consultantId: parsed.consultantId,
+            projectId: project.rowKey,
+            consultantId: consultant.rowKey,
             role: parsed.role,
             billable: parsed.billable,
             rate: parsed.rate,
@@ -966,23 +975,24 @@ export function createHRServer(): Server {
         // ──── Bulk Assign Consultants ────
         case "bulk-assign-consultants": {
           const { projectId, consultantIds, role, billable, rate } = bulkAssignParser.parse(args);
-          const project = await db.getProjectById(projectId);
+          const project = await db.resolveProject(projectId);
           if (!project) {
             return {
-              content: [{ type: "text" as const, text: `Project ${projectId} not found.` }],
+              content: [{ type: "text" as const, text: `Project "${projectId}" not found (searched by ID and name).` }],
               isError: true,
             };
           }
+          const resolvedProjectId = project.rowKey;
           const results: string[] = [];
-          for (const consultantId of consultantIds) {
-            const consultant = await db.getConsultantById(consultantId);
+          for (const consultantIdOrName of consultantIds) {
+            const consultant = await db.resolveConsultant(consultantIdOrName);
             if (!consultant) {
-              results.push(`✗ Consultant ${consultantId} not found`);
+              results.push(`✗ Consultant "${consultantIdOrName}" not found (searched by ID and name)`);
               continue;
             }
             await db.createAssignment({
-              projectId,
-              consultantId,
+              projectId: resolvedProjectId,
+              consultantId: consultant.rowKey,
               role,
               billable,
               rate,
@@ -1002,10 +1012,24 @@ export function createHRServer(): Server {
         // ──── Remove Assignment ────
         case "remove-assignment": {
           const { projectId, consultantId } = removeAssignmentParser.parse(args);
-          const removed = await db.deleteAssignment(projectId, consultantId);
+          const project = await db.resolveProject(projectId);
+          if (!project) {
+            return {
+              content: [{ type: "text" as const, text: `Project "${projectId}" not found (searched by ID and name).` }],
+              isError: true,
+            };
+          }
+          const consultant = await db.resolveConsultant(consultantId);
+          if (!consultant) {
+            return {
+              content: [{ type: "text" as const, text: `Consultant "${consultantId}" not found (searched by ID and name).` }],
+              isError: true,
+            };
+          }
+          const removed = await db.deleteAssignment(project.rowKey, consultant.rowKey);
           if (!removed) {
             return {
-              content: [{ type: "text" as const, text: `Assignment for consultant ${consultantId} on project ${projectId} not found.` }],
+              content: [{ type: "text" as const, text: `Assignment for consultant ${consultant.name} on project ${project.name} not found.` }],
               isError: true,
             };
           }
@@ -1013,7 +1037,7 @@ export function createHRServer(): Server {
             content: [
               {
                 type: "text" as const,
-                text: `Removed assignment: consultant ${consultantId} from project ${projectId}.`,
+                text: `Removed assignment: ${consultant.name} from project "${project.name}".`,
               },
             ],
           };

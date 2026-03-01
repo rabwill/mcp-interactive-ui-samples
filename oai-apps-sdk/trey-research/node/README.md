@@ -28,20 +28,8 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 | `bulk-assign-consultants` | Assign multiple consultants to a project at once |
 | `remove-assignment` | Remove a consultant's assignment from a project |
 
-## Sample Prompts
 
-| Prompt | What it does |
-|--------|-------------|
-| *Show the HR dashboard* | Opens the HR consultant dashboard widget |
-| *Show consultants with React skills* | Dashboard filtered to React consultants |
-| *Show me the profile for consultant 1* | Opens the consultant profile card |
-| *Search for consultants named Avery* | Opens the bulk editor with matching consultants |
-| *Open the bulk editor* | Opens the full consultant editor grid |
-| *Show me project details for project 1* | Opens the project detail view |
-| *Assign consultant 2 to project 3 as Architect* | Creates a new project assignment |
-| *Update consultant 1's email to newemail@trey.com* | Updates consultant info |
-| *Remove consultant 4 from project 2* | Removes the assignment |
-| *Bulk assign consultants 1, 2, and 3 to project 5 as Developers* | Assigns multiple consultants at once |
+
 
 ## Prerequisites
 
@@ -51,6 +39,19 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 - A [Microsoft 365 developer account](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts)
 
 ## Getting Started
+
+1. **Create your `.env` file** — copy `.env.sample` and update `SERVER_BASE_URL` with your dev tunnel URL:
+   ```bash
+   cp .env.sample .env
+   ```
+   Then edit `.env` and replace the placeholder with your actual tunnel URL:
+   ```
+   SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
+   ```
+   > This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
+
+2. **Run the setup commands:**
+
 
 Run all scripts from `src/mcpserver/`
 
@@ -76,6 +77,26 @@ Run all scripts from `src/mcpserver/`
    ```
 7. **Provision & debug** — Use the ATK Provision button, then Start Debugging to preview the agent in Copilot
 
+## Sample Prompts
+
+| Prompt | What it does |
+|--------|-------------|
+| *Show the HR dashboard* | Opens the HR consultant dashboard widget |
+| *I need a React developer for the Copilot project at Consolidated Messenger. Find someone with React skills, show me their profile, and assign them as a Developer.* | Searches consultants by skill, displays a profile card, and assigns the consultant to a project — all by name, no IDs needed |
+| *Show me the HR dashboard filtered to only billable assignments. Which consultants have the most forecasted hours, and are any of them over-allocated?* | Opens the interactive dashboard with a billable filter applied, then the AI analyzes forecast data across consultants to surface workload insights |
+| *We need to staff the Disaster Recovery project at Relecloud. Show me the project details, then find all consultants who have Python or Java skills and bulk-assign them as Developers at $120/hr.* | Chains project lookup, skill-based consultant search, and bulk assignment in a single conversation — replacing multiple clicks across an HR system |
+| *Compare Avery Howard and Sanjay Puranik — show me both their profiles side by side. Who has more certifications, and which projects are they currently assigned to?* | Fetches two consultant profiles by name and synthesizes a comparison of certifications, skills, and active assignments |
+
+## Test the agent
+
+1. Open your browser and go to [https://m365.cloud.microsoft/chat](https://m365.cloud.microsoft/chat).
+2. Select your agent in the left-hand sidebar. If you don't see your agent, select **All agents**.
+3. Ask the agent to do something that invokes your MCP server, use above table for reference to sample prompts.
+4. Allow the agent to connect to the MCP server when prompted.
+5. The agent renders the UI widget.
+
+
+
 ## Project Structure
 
 | Folder | Description |
@@ -94,4 +115,4 @@ Run all scripts from `src/mcpserver/`
 - [Build Declarative Agents for Microsoft 365 Copilot with MCP](https://devblogs.microsoft.com/microsoft365dev/build-declarative-agents-for-microsoft-365-copilot-with-mcp/)
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 
-<img src="https://m365-visitor-stats.azurewebsites.net/copilot-pro-dev-samples/samples/pnp-copilot-pro-dev-da-trey-mcp-openai-sdk" />
+
