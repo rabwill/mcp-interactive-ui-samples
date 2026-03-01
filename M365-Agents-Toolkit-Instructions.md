@@ -4,8 +4,8 @@ This document provides a step-by-step guide to building a Declarative Agent in C
 
 Your MCP tools can return rich interactive UI components. Microsoft 365 Copilot supports UI widgets created using the following methods:
 
-- **MCP Apps** — An extension to MCP that enables MCP servers to deliver interactive user interfaces to hosts.
-- **OpenAI Apps SDK** — Tools to build ChatGPT apps based on the MCP Apps standard with extra ChatGPT functionality.
+- **[MCP Apps](https://modelcontextprotocol.github.io/ext-apps/api/documents/Overview.html)** — An extension to MCP that enables MCP servers to deliver interactive user interfaces to hosts.
+- **[OpenAI Apps SDK](https://developers.openai.com/apps-sdk)** — Tools to build ChatGPT apps based on the MCP Apps standard with extra ChatGPT functionality.
 
 For either approach, the instructions below are the same.
 
