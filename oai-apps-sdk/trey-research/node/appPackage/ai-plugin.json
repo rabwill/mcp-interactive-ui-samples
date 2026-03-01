@@ -52,7 +52,7 @@
             "type": "RemoteMCPServer",
             "spec": {
                 "url": "https://t3n5kh44-3001.aue.devtunnels.ms/mcp",
-                "mcp_tool_description": {
+                "x-mcp_tool_description": {
                     "tools": [
                         {
                             "name": "show-hr-dashboard",
