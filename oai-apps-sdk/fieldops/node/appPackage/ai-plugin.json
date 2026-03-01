@@ -282,16 +282,16 @@
                                 "$schema": "http://json-schema.org/draft-07/schema#"
                             },
                             "annotations": {
-                                "readOnlyHint": true
+                                "readOnlyHint": false,
+                                "destructiveHint": false,
+                                "openWorldHint": false
                             },
                             "execution": {
                                 "taskSupport": "forbidden"
                             },
                             "_meta": {
-                                "openai/outputTemplate": "ui://widget/dispatch-confirmation.html",
                                 "openai/toolInvocation/invoking": "Committing assignments…",
                                 "openai/toolInvocation/invoked": "Assignments committed.",
-                                "openai/widgetAccessible": true,
                                 "openai/visibility": "private"
                             }
                         }

@@ -16,6 +16,7 @@ You can add interactive UI widgets to your declarative agents by adding a Model 
 
 MCP server for a field service dispatch workflow with assignment intake, map visualization, dispatch planning, and confirmation flow. Requires a free Mapbox token for map widgets.
 
+- [MCP Apps version](mcp-apps/fieldops/node/src/mcpserver/README.md)
 - [OpenAI Apps SDK version](oai-apps-sdk/fieldops/node/README.md)
 
 [![Watch demo video](oai-apps-sdk/fieldops/node/demos/screenshots/dispatchPlan_sbs_play.png)](https://www.youtube.com/watch?v=rsfPzTxCgjQ)
@@ -83,6 +84,7 @@ MCP server that recommends learning and training courses with embedded video pre
 ```
 mcp-apps/                        # MCP Apps SDK samples
   employee-training/node/        # Learning course recommendations
+  fieldops/node/                 # Field service dispatch
   trey-research/node/            # HR consultant management
   zava-insurance/node/           # Insurance claims management
 
