@@ -34,31 +34,78 @@ An MCP (Model Context Protocol) server for **Zava Insurance** that exposes claim
 | `get-claim-summary` | Text summary of a specific claim |
 | `list-inspectors` | List all inspectors with specializations |
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+)
+- [Dev Tunnels CLI](https://learn.microsoft.com/azure/developer/dev-tunnels/get-started) — required to expose the local server to MCP Apps-capable hosts
+
 ## Quick Start
 
 > **Note:** Run all commands from the root `src/mcpserver/` directory.
 
+### 1. Create a Dev Tunnel
+
+MCP Apps-capable hosts (Claude, ChatGPT, Microsoft 365 Copilot, etc.) need a publicly accessible URL to reach your local server. Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/overview) to create one:
+
 ```bash
-# 1. Install ALL dependencies (root + server + widgets)
-#    This is required — each sub-project has its own package.json
+# Login (first time only)
+devtunnel user login
+
+# Create a persistent tunnel on port 3001 with anonymous access
+devtunnel create --port 3001 --allow-anonymous
+```
+
+Copy the tunnel URL from the output (e.g. `https://<tunnel-id>.devtunnels.ms`). You'll need it in the next step.
+
+> **Tip:** Keep the tunnel running in a separate terminal while developing.
+
+### 2. Set up the `.env` file
+
+Copy the sample environment file and update it with your tunnel URL:
+
+```bash
+cp .env.sample .env
+```
+
+Open `.env` and verify/update the values:
+
+```dotenv
+# Azure Table Storage (Azurite for local dev)
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;
+
+# Server port
+PORT=3001
+```
+
+### 3. Install, Build & Run
+
+```bash
+# Install ALL dependencies (root + server + widgets)
+# This is required — each sub-project has its own package.json
 npm run install:all
 
-# 2. Start Azurite (local storage emulator) — run in a separate terminal
+# Start Azurite (local storage emulator) — run in a separate terminal
 npm run start:azurite
 
-# 3. Seed the database (requires Azurite to be running)
+# Seed the database (requires Azurite to be running)
 npm run seed
 
-# 4. Build widgets
+# Build widgets
 npm run build:widgets
 
-# 5. Start the MCP server (port 3001)
+# Start the MCP server (port 3001)
 npm run dev:server
 ```
 
-The MCP server will be available at: `http://localhost:3001/mcp`
+### 4. Connect
 
-Connect from any MCP Apps-capable client by pointing it to `http://localhost:3001/mcp`.
+The MCP server will be available locally at: `http://localhost:3001/mcp`
+
+Use your **Dev Tunnel URL** to connect from any MCP Apps-capable client:
+
+```
+https://<tunnel-id>.devtunnels.ms/mcp
+```
 
 For more on MCP Apps, see the [MCP Apps documentation](https://modelcontextprotocol.github.io/ext-apps/).
 
