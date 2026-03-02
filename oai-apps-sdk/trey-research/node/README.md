@@ -2,40 +2,9 @@
 
 A Microsoft 365 Copilot Declarative Agent that connects to the **Trey Research MCP Server**, enabling HR consultant management through natural language. The MCP server uses the **OpenAI App SDK** to render rich, interactive widgets directly inside the Copilot chat — including an HR dashboard, consultant profile cards, a bulk editor, and project detail views.
 
-<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank">
-  <div style="position:relative; display:inline-block; max-width:600px;">
-    <img src="https://img.youtube.com/vi/kNXT7Syf9fQ/maxresdefault.jpg" style="width:100%; display:block;">    
-    <div style="
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    ">
-      <div style="
-        width:90px;
-        height:90px;
-        border-radius:50%;
-        background:rgba(0,0,0,0.6);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-      ">
-        <div style="
-          width:0;
-          height:0;
-          border-top:18px solid transparent;
-          border-bottom:18px solid transparent;
-          border-left:30px solid white;
-          margin-left:6px;
-        "></div>
-      </div>
-    </div>
-  </div>
-</a>
+[![Watch the demo](./demos/fake-play-thumbnail.png)](https://www.youtube.com/watch?v=kNXT7Syf9fQ)
 
-- Demo video file: [demos/demo-video.mp4](demos/demo-video.mp4)
-- Watch demo on YouTube: [https://youtu.be/kNXT7Syf9fQ?si=KV1_BEYJ1MMP4nkQ](https://youtu.be/kNXT7Syf9fQ?si=KV1_BEYJ1MMP4nkQ)
+> **[Watch the demo on YouTube](https://www.youtube.com/watch?v=kNXT7Syf9fQ)** | [Demo video file](demos/demo-video.mp4)
 
 Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. Instead of hand-authoring an OpenAPI spec, ATK points at the MCP discovery URL and generates all manifests, wiring in tools and function definitions automatically.
 
