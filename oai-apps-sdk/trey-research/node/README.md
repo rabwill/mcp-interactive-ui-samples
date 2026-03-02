@@ -42,43 +42,43 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 
 ## Getting Started
 
-1. Create a file `.env.dev` file (use the sample `.env.dev.sample`) inside the **env** folder in the root of the project.
+1. **Create a file** `.env.dev` file (use the sample `.env.dev.sample`) inside the **env** folder in the root of the project.
 
 2. **Run the setup commands:**
 
 
-Run all scripts from `src/mcpserver/`
+    Run all scripts from `src/mcpserver/`
 
-1. **Install dependencies** — run `npm run install:all`
-2. **Start Azurite** (local storage emulator) — `npm run start:azurite` in a separate terminal
-3. **Seed the database** — `npm run seed`
-4. **Build widgets** — `npm run build:widgets`
-5. **Start the MCP server** — `npm run dev:server` (runs on `http://localhost:3001/mcp`)
-6. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
-   ```bash
-   devtunnel host -p 3001 --allow-anonymous
-   ```
-   Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`) and update the `url` field under the `RemoteMCPServer` runtime in `appPackage/ai-plugin.json`:
-   ```json
-   "runtimes": [
-       {
-           "type": "RemoteMCPServer",
-           "spec": {
-               "url": "https://<your-tunnel-url>/mcp"
-           }
-       }
-   ]
-   ```
-7. Inside **src/mcpserver** folder  **create your `.env` file** — copy `.env.sample` and update `SERVER_BASE_URL` with your dev tunnel URL:
-   ```bash
-   cp .env.sample .env
-   ```
-   Then edit `.env` and replace the placeholder with your actual tunnel URL:
-   ```
-   SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
-   ```
-   > This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
-8. **Provision & debug** — Use the **Provision** button from Agents Toolkit's **LifeCycle** panel.
+    1. **Install dependencies** — run `npm run install:all`
+    2. **Start Azurite** (local storage emulator) — `npm run start:azurite` in a separate terminal
+    3. **Seed the database** — `npm run seed`
+    4. **Build widgets** — `npm run build:widgets`
+    5. **Start the MCP server** — `npm run dev:server` (runs on `http://localhost:3001/mcp`)
+3. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
+    ```bash
+    devtunnel host -p 3001 --allow-anonymous
+    ```
+    Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`) and update the `url` field under the `RemoteMCPServer` runtime in `appPackage/ai-plugin.json`:
+    ```json
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "spec": {
+                "url": "https://<your-tunnel-url>/mcp"
+            }
+        }
+    ]
+    ```
+4. Inside **src/mcpserver** folder  **create your `.env` file** — copy `.env.sample` and update `SERVER_BASE_URL` with your dev tunnel URL:
+    ```bash
+    cp .env.sample .env
+    ```
+    Then edit `.env` and replace the placeholder with your actual tunnel URL:
+    ```
+    SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
+    ```
+    > This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
+5. **Provision** — Use the **Provision** button from Agents Toolkit's **LifeCycle** panel.
 
 ## Sample Prompts
 
@@ -97,7 +97,6 @@ Run all scripts from `src/mcpserver/`
 3. Ask the agent to do something that invokes your MCP server, use above table for reference to sample prompts.
 4. Allow the agent to connect to the MCP server when prompted.
 5. The agent renders the UI widget.
-
 
 
 ## Project Structure
