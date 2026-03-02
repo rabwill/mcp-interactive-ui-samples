@@ -5,8 +5,36 @@
     "instructions": "$[file('instruction.txt')]",
     "conversation_starters": [
         {
-			"title": "Sample conversation starters",
-			"text": "Hi! What can you do for me?"
+			"title": "Claims dashboard",
+			"text": "Show the claims dashboard"
+		},
+        {
+			"title": "Open claims by loss",
+			"text": "Show me all open claims sorted by estimated loss from highest to lowest"
+		},
+        {
+			"title": "Claim details & inspections",
+			"text": "Show me Kimberly King's claim details, and tell me what inspections are pending"
+		},
+        {
+			"title": "Roofing contractors",
+			"text": "Show me the preferred roofing contractors"
+		},
+        {
+			"title": "Approve & refresh",
+			"text": "Approve claim 2 with a note that all documentation has been verified, then show me the updated dashboard"
+		},
+        {
+			"title": "Create inspection",
+			"text": "Create a high-priority initial inspection for claim CN202504990 scheduled for next Monday, and assign it to an inspector who specializes in fire damage"
+		},
+        {
+			"title": "Top losses & patterns",
+			"text": "Which claims have the highest estimated losses? Show me the top ones and compare their damage types"
+		},
+        {
+			"title": "Multi-step update",
+			"text": "Show the claim detail for claim 1. Then approve the pending purchase order and mark the inspection as completed with findings noting that all repairs are satisfactory"
 		}
     ],
     "capabilities": [
