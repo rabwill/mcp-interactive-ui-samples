@@ -29,16 +29,15 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 
 | Prompt | What it does |
 |--------|-------------|
-| *Show claims dashboard* | Opens the claims dashboard widget |
-| *Show claims that are pending* | Dashboard filtered to pending claims |
-| *Show me claim CN202504990* | Opens the detail view for that claim |
-| *Approve claim 3 and add a note "Verified by adjuster"* | Updates claim status |
-| *Show me all contractors* | Opens the contractors list widget |
-| *Show only preferred roofing contractors* | Filtered contractors list |
-| *Mark inspection insp-005 as completed with findings "No structural damage found"* | Updates inspection |
-| *Approve purchase order po-003* | Updates PO status |
-| *Give me a summary of claim 7* | Returns a text summary |
-| *List all inspectors* | Shows inspectors and their specializations |
+| *Show the claims dashboard* | Opens the claims dashboard widget with all claims, status metrics, and click-to-detail |
+| *Show me all open claims sorted by estimated loss from highest to lowest* | Opens the dashboard filtered to open claims and sorted by estimated loss descending — quickly surfaces the highest-value open claims |
+| *Show me Kimberly King's claim details, and tell me what inspections are pending* | Fetches the claim detail widget for the specific policy holder and summarizes pending inspection status — saves toggling between screens |
+| *Show me the preferred roofing contractors* | Opens the contractors list filtered to preferred roofing specialists — useful when assigning repair work on storm or roof damage claims |
+| *Approve claim 2 with a note that all documentation has been verified, then show me the updated dashboard* | Updates the claim status to Approved, adds a note, and re-opens the dashboard so you can confirm the change — a multi-step workflow in one prompt |
+| *Create a high-priority initial inspection for claim CN202504990 scheduled for next Monday, and assign it to an inspector who specializes in fire damage* | Lists inspectors, picks one with fire damage specialization, and creates the inspection — chains three tools automatically |
+| *Which claims have the highest estimated losses? Show me the top ones and compare their damage types* | Opens the dashboard sorted by estimated loss descending, then the AI analyzes damage types across high-value claims to surface patterns |
+| *Show the claim detail for claim 1. Then approve the pending purchase order and mark the inspection as completed with findings noting that all repairs are satisfactory* | Chains claim detail view, purchase order approval, and inspection update in one conversation — replaces multiple manual steps |
+
 
 ## Prerequisites
 
@@ -49,29 +48,47 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 
 ## Getting Started
 
-Run all scripts from `src/mcpserver/`
+1. **Create a file** `.env.dev` file (use the sample `.env.dev.sample`) inside the **env** folder in the root of the project.
 
-1. **Install dependencies** — run `npm run install:all`
-2. **Start Azurite** (local storage emulator) — `npm run start:azurite` in a separate terminal
-3. **Seed the database** — `npm run seed`
-4. **Build widgets** — `npm run build:widgets`
-5. **Start the MCP server** — `npm run dev:server` (runs on `http://localhost:3001/mcp`)
-6. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
-   ```bash
-   devtunnel host -p 3001 --allow-anonymous
-   ```
-   Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`) and update the `url` field under the `RemoteMCPServer` runtime in `appPackage/ai-plugin.json`:
-   ```json
-   "runtimes": [
-       {
-           "type": "RemoteMCPServer",
-           "spec": {
-               "url": "https://<your-tunnel-url>/mcp"
-           }
-       }
-   ]
-   ```
-7. **Provision & debug** — Use the ATK Provision button, then Start Debugging to preview the agent in Copilot
+2. **Run the setup commands:**
+
+    Run all scripts from `src/mcpserver/`
+
+    1. **Install dependencies** — run `npm run install:all`
+    2. **Start Azurite** (local storage emulator) — `npm run start:azurite` in a separate terminal
+    3. **Seed the database** — `npm run seed`
+    4. **Build widgets** — `npm run build:widgets`
+    5. **Start the MCP server** — `npm run dev:server` (runs on `http://localhost:3001/mcp`)
+3. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
+    ```bash
+    devtunnel host -p 3001 --allow-anonymous
+    ```
+    Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`) and update the `url` field under the `RemoteMCPServer` runtime in `appPackage/ai-plugin.json`:
+    ```json
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "spec": {
+                "url": "https://<your-tunnel-url>/mcp"
+            }
+        }
+    ]
+    ```
+4. Inside **src/mcpserver** folder  **create your `.env` file** — copy `.env.sample`:
+    ```bash
+    cp .env.sample .env
+    ```
+    > This file contains the Azure Table Storage connection string and server port used by the MCP server. The defaults in `.env.sample` are pre-configured for local Azurite development.
+
+5. **Provision** — Use the **Provision** button from Agents Toolkit's **LifeCycle** panel.
+
+## Test the agent
+
+1. Open your browser and go to [https://m365.cloud.microsoft/chat](https://m365.cloud.microsoft/chat).
+2. Select your agent in the left-hand sidebar. If you don't see your agent, select **All agents**.
+3. Ask the agent to do something that invokes your MCP server, use above table for reference to sample prompts.
+4. Allow the agent to connect to the MCP server when prompted.
+5. The agent renders the UI widget.
 
 ## Project Structure
 
