@@ -33,10 +33,12 @@ MCP server for a field service dispatch workflow with assignment intake, map vis
 
 MCP server for managing HR consultants, projects, and assignments with Fluent UI React widgets including an HR dashboard, consultant profile cards, bulk editor, and project detail views.
 
-- [MCP Apps version](mcp-apps/trey-research/node/src/mcpserver/README.md)
-- [OpenAI Apps SDK version](oai-apps-sdk/trey-research/node/README.md)
+- [Declarative Agent connected to MCP server (MCP Apps)](mcp-apps/trey-research/node/README.md)
+- [Declarative Agent connected to MCP server (OpenAI Apps SDK)](oai-apps-sdk/trey-research/node/README.md)
+- [MCP Server using MCP Apps](mcp-apps/trey-research/node/src/mcpserver/README.md)
+- [MCP Server using OpenAI Apps SDK](oai-apps-sdk/trey-research/node/src/mcpserver/README.md)
 
-![Trey Research demo](oai-apps-sdk/trey-research/node/assets/demo.png)
+<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank"><img src="./oai-apps-sdk/trey-research/node/demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
 
 | Prompt | What it does |
 |---|---|
@@ -52,10 +54,13 @@ MCP server for managing HR consultants, projects, and assignments with Fluent UI
 
 MCP server for insurance claims management with claims dashboard, claim detail with map view, and contractor list widgets.
 
-- [MCP Apps version](mcp-apps/zava-insurance/node/src/mcpserver/README.md)
-- [OpenAI Apps SDK version](oai-apps-sdk/zava-insurance/node/README.md)
+- [Declarative Agent connected to MCP server (MCP Apps)](mcp-apps/zava-insurance/node/README.md)
+- [Declarative Agent connected to MCP server (OpenAI Apps SDK)](oai-apps-sdk/zava-insurance/node/README.md)
+- [MCP Server using MCP Apps](mcp-apps/zava-insurance/node/src/mcpserver/README.md)
+- [MCP Server using OpenAI Apps SDK](oai-apps-sdk/zava-insurance/node/src/mcpserver/README.md)
 
-![Zava Insurance demo](oai-apps-sdk/zava-insurance/node/assets/demo.png)
+<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank"><img src="./oai-apps-sdk/zava-insurance/node/demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
+
 
 | Prompt | What it does |
 |---|---|
