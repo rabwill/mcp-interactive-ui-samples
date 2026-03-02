@@ -1,7 +1,6 @@
 # Zava Insurance — Declarative Agent with MCP Server & Rich UI
 
 A Microsoft 365 Copilot Declarative Agent that connects to the **Zava Insurance MCP Server**, enabling insurance claims management through natural language. The MCP server uses the **OpenAI App SDK** to render rich, interactive widgets directly inside the Copilot chat — including claims dashboards, claim detail views, and contractor lists.
-![demo image of rich dashboard in Copilot](./assets/demo.png)
 
 <a href="https://www.youtube.com/watch?v=1zrWTtuDaQk" target="_blank"><img src="./demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
 
