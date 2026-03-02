@@ -36,7 +36,7 @@ An MCP (Model Context Protocol) server for **Zava Insurance** that exposes claim
 
 ## Quick Start
 
-> **Note:** Run all commands from the root `mcpserver/` directory.
+> **Note:** Run all commands from the root `src/mcpserver/` directory.
 
 ```bash
 # 1. Install ALL dependencies (root + server + widgets)
