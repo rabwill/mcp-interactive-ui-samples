@@ -2,9 +2,9 @@
 
 A Microsoft 365 Copilot Declarative Agent that connects to the **Trey Research MCP Server**, enabling HR consultant management through natural language. The MCP server uses the **OpenAI App SDK** to render rich, interactive widgets directly inside the Copilot chat — including an HR dashboard, consultant profile cards, a bulk editor, and project detail views.
 
-[![Watch the demo](./demos/fake-play-thumbnail.png)](https://www.youtube.com/watch?v=kNXT7Syf9fQ)
+<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank"><img src="./demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
 
-> **[Watch the demo on YouTube](https://www.youtube.com/watch?v=kNXT7Syf9fQ)** | [Demo video file](demos/demo-video.mp4)
+> **<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank">Watch the demo on YouTube</a>** | [Demo video file](demos/demo-video.mp4)
 
 Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. Instead of hand-authoring an OpenAPI spec, ATK points at the MCP discovery URL and generates all manifests, wiring in tools and function definitions automatically.
 
