@@ -2,7 +2,40 @@
 
 A Microsoft 365 Copilot Declarative Agent that connects to the **Trey Research MCP Server**, enabling HR consultant management through natural language. The MCP server uses the **OpenAI App SDK** to render rich, interactive widgets directly inside the Copilot chat — including an HR dashboard, consultant profile cards, a bulk editor, and project detail views.
 
-![demo image of rich dashboard in Copilot](./assets/demo.png)
+<a href="https://www.youtube.com/watch?v=kNXT7Syf9fQ" target="_blank">
+  <div style="position:relative; display:inline-block; max-width:600px;">
+    <img src="https://img.youtube.com/vi/kNXT7Syf9fQ/maxresdefault.jpg" style="width:100%; display:block;">    
+    <div style="
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    ">
+      <div style="
+        width:90px;
+        height:90px;
+        border-radius:50%;
+        background:rgba(0,0,0,0.6);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      ">
+        <div style="
+          width:0;
+          height:0;
+          border-top:18px solid transparent;
+          border-bottom:18px solid transparent;
+          border-left:30px solid white;
+          margin-left:6px;
+        "></div>
+      </div>
+    </div>
+  </div>
+</a>
+
+- Demo video file: [demos/demo-video.mp4](demos/demo-video.mp4)
+- Watch demo on YouTube: [https://youtu.be/kNXT7Syf9fQ?si=KV1_BEYJ1MMP4nkQ](https://youtu.be/kNXT7Syf9fQ?si=KV1_BEYJ1MMP4nkQ)
 
 Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. Instead of hand-authoring an OpenAPI spec, ATK points at the MCP discovery URL and generates all manifests, wiring in tools and function definitions automatically.
 
@@ -40,15 +73,7 @@ Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. 
 
 ## Getting Started
 
-1. **Create your `.env` file** — copy `.env.sample` and update `SERVER_BASE_URL` with your dev tunnel URL:
-   ```bash
-   cp .env.sample .env
-   ```
-   Then edit `.env` and replace the placeholder with your actual tunnel URL:
-   ```
-   SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
-   ```
-   > This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
+1. Create a file `.env.dev` file (use the sample `.env.dev.sample`) inside the **env** folder in the root of the project.
 
 2. **Run the setup commands:**
 
@@ -75,7 +100,16 @@ Run all scripts from `src/mcpserver/`
        }
    ]
    ```
-7. **Provision & debug** — Use the ATK Provision button, then Start Debugging to preview the agent in Copilot
+7. Inside **src/mcpserver** folder  **create your `.env` file** — copy `.env.sample` and update `SERVER_BASE_URL` with your dev tunnel URL:
+   ```bash
+   cp .env.sample .env
+   ```
+   Then edit `.env` and replace the placeholder with your actual tunnel URL:
+   ```
+   SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
+   ```
+   > This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
+8. **Provision & debug** — Use the **Provision** button from Agents Toolkit's **LifeCycle** panel.
 
 ## Sample Prompts
 
