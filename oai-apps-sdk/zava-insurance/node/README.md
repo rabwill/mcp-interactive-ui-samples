@@ -3,6 +3,10 @@
 A Microsoft 365 Copilot Declarative Agent that connects to the **Zava Insurance MCP Server**, enabling insurance claims management through natural language. The MCP server uses the **OpenAI App SDK** to render rich, interactive widgets directly inside the Copilot chat — including claims dashboards, claim detail views, and contractor lists.
 ![demo image of rich dashboard in Copilot](./assets/demo.png)
 
+<a href="https://www.youtube.com/watch?v=1zrWTtuDaQk" target="_blank"><img src="./demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
+
+> **<a href="https://www.youtube.com/watch?v=1zrWTtuDaQk" target="_blank">Watch the demo on YouTube</a>** | [Demo video file](demos/zava-oai.mp4)
+
 Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. Instead of hand-authoring an OpenAPI spec, ATK points at the MCP discovery URL and generates all manifests, wiring in tools and function definitions automatically.
 
 ## What This Agent Can Do
