@@ -11,6 +11,32 @@ MCP server with rich Fluent UI React widgets for managing HR consultants, projec
 
 Azurite is included as a dev dependency — no separate install needed.
 
+
+
+## Set Up Dev Tunnel & Environment
+
+1. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
+
+   ```bash
+   devtunnel host -p 3001 --allow-anonymous
+   ```
+
+   Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`).
+
+2. **Create your `.env` file** — Inside `src/mcpserver`, copy the sample and update `SERVER_BASE_URL` with your dev tunnel URL:
+
+   ```bash
+   cp .env.sample .env
+   ```
+
+   Then edit `.env` and replace the placeholder with your actual tunnel URL:
+
+   ```dotenv
+   SERVER_BASE_URL=https://<your-tunnel-id>-3001.aue.devtunnels.ms/
+   ```
+
+   This URL is injected into the widgets so they can call back to the MCP server. Without it, widgets will default to `http://localhost:3001`.
+
 ## Quick Start
 
 ```bash
@@ -52,15 +78,7 @@ For details on how to connect this MCP server to a Microsoft 365 Copilot Declara
 | Prompt | What it does |
 |---|---|
 | *Show me the HR dashboard* | Opens the dashboard widget with all data |
-| *Show dashboard filtered by Azure skill* | Dashboard filtered to Azure-skilled consultants |
-| *Show profile for consultant 1* | Opens a consultant profile card |
-| *Show project details for project 1* | Opens project detail with team |
-| *Search consultants with Azure skills* | Finds matching consultants in the bulk editor |
-| *Open the bulk editor* | Opens the editor with all consultants |
-| *Open bulk editor for consultants named Avery* | Editor filtered to matching consultants |
-| *Assign consultant 3 to project 1 as Architect at $150/hr* | Creates an assignment |
-| *Remove consultant 2 from project 1* | Removes an assignment |
-| *Update consultant 1 — add skill "Kubernetes"* | Updates a single field |
+
 
 ## Development
 
