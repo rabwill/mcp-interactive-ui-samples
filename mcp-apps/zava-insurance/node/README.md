@@ -1,93 +1,113 @@
-# Declarative Agent + MCP in VS Code 
+# Zava Insurance — Declarative Agent with MCP Server & Rich UI
 
-This template shows how to wrap your existing MCP Server into a Microsoft 365 Copilot Declarative Agent (DA) using the Agents Toolkit (ATK) in VS Code. Instead of hand‑authoring an OpenAPI spec, you point ATK at your MCP discovery URL and let the toolkit generate all manifests, wiring in authentication and function definitions automatically. 
+A Microsoft 365 Copilot Declarative Agent that connects to the **Zava Insurance MCP Server**, enabling insurance claims management through natural language. The MCP server uses **[MCP Apps](https://github.com/modelcontextprotocol/ext-apps)** (`@modelcontextprotocol/ext-apps`) to render rich, interactive widgets directly inside the Copilot chat — including claims dashboards, claim detail views, and contractor lists.
 
-## Get started with the template
+<a href="https://www.youtube.com/watch?v=1zrWTtuDaQk" target="_blank"><img src="./demos/fake-play-thumbnail.png" alt="Watch the demo"></a>
 
-> **Prerequisites**
->
-> To run this app template in your local dev machine, you will need:
->
-> - [Node.js](https://nodejs.org/), supported versions: 18, 20, 22
-> - A [Microsoft 365 account for development](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts).
-> - [Microsoft 365 Agents Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [Microsoft 365 Agents Toolkit CLI](https://aka.ms/teamsfx-toolkit-cli)
-> - [Microsoft 365 Copilot license](https://learn.microsoft.com/microsoft-365-copilot/extensibility/prerequisites#prerequisites)
+> **<a href="https://www.youtube.com/watch?v=1zrWTtuDaQk" target="_blank">Watch the demo on YouTube</a>** | [Demo video file](demos/zava-oai.mp4)
 
-1. Open ATK in VS Code
+Built with the [Agents Toolkit (ATK)](https://aka.ms/teams-toolkit) in VS Code. Instead of hand-authoring an OpenAPI spec, ATK points at the MCP discovery URL and generates all manifests, wiring in tools and function definitions automatically.
 
-    Click the Microsoft 365 Agents Toolkit icon in the Activity Bar. 
+## What This Agent Can Do
 
-2. Sign in
+### Rich UI Tools (render interactive widgets in chat)
 
-    Open the Agents Toolkit by click on the toolkit icon in the VS Code sidebar. Under Account, authenticate with your dev M365 account.
+| Tool | Description |
+|------|-------------|
+| `show-claims-dashboard` | Grid view of all claims with status filters, metrics, and click-to-detail |
+| `show-claim-detail` | Detailed view of a single claim with inspections, purchase orders, and a map |
+| `show-contractors` | Filterable list of contractors with ratings and specialties |
 
-3. Scaffold a new DA
+### Data Tools
 
-    In the Agents Toolkit menu, click 'Create new Agent/app', select 'Declarative Agent', choose a folder and name (e.g. my-mcp-agent).
+| Tool | Description |
+|------|-------------|
+| `update-claim-status` | Update a claim's status and add notes |
+| `update-inspection` | Update inspection status, findings, and recommended actions |
+| `update-purchase-order` | Update a purchase order's status |
+| `get-claim-summary` | Text summary of a specific claim |
+| `list-inspectors` | List all inspectors with specializations |
+| `create-inspection` | Create a new inspection record for a claim |
 
-4. Add your MCP Server
+## Sample Prompts
 
-    In the ATK sidebar click Add Action → Start with an MCP server, then enter your MCP discovery URL (e.g. https://mcp.contoso.com/discover).
+| Prompt | What it does |
+|--------|-------------|
+| *Show the claims dashboard* | Opens the claims dashboard widget with all claims, status metrics, and click-to-detail |
+| *Show me all open claims sorted by estimated loss from highest to lowest* | Opens the dashboard filtered to open claims and sorted by estimated loss descending — quickly surfaces the highest-value open claims |
+| *Show me Kimberly King's claim details, and tell me what inspections are pending* | Fetches the claim detail widget for the specific policy holder and summarizes pending inspection status — saves toggling between screens |
+| *Show me the preferred roofing contractors* | Opens the contractors list filtered to preferred roofing specialists — useful when assigning repair work on storm or roof damage claims |
+| *Approve claim 2 with a note that all documentation has been verified, then show me the updated dashboard* | Updates the claim status to Approved, adds a note, and re-opens the dashboard so you can confirm the change — a multi-step workflow in one prompt |
+| *Create a high-priority initial inspection for claim CN202504990 scheduled for next Monday, and assign it to an inspector who specializes in fire damage* | Lists inspectors, picks one with fire damage specialization, and creates the inspection — chains three tools automatically |
+| *Which claims have the highest estimated losses? Show me the top ones and compare their damage types* | Opens the dashboard sorted by estimated loss descending, then the AI analyzes damage types across high-value claims to surface patterns |
+| *Show the claim detail for claim 1. Then approve the pending purchase order and mark the inspection as completed with findings noting that all repairs are satisfactory* | Chains claim detail view, purchase order approval, and inspection update in one conversation — replaces multiple manual steps |
 
-5. Start your MCP Server 
 
-    After the DA project generated, click the "Start" button in the mcp.json file to start your MCP server, when prompt, enter the user ID and password for authentication.
+## Prerequisites
 
-6. Fetch and select tools 
+- [Node.js](https://nodejs.org/) 18, 20, or 22
+- [Microsoft 365 Agents Toolkit](https://aka.ms/teams-toolkit) VS Code extension (v5.0.0+)
+- [Microsoft 365 Copilot license](https://learn.microsoft.com/microsoft-365-copilot/extensibility/prerequisites#prerequisites)
+- A [Microsoft 365 developer account](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts)
 
-    When prompted, Click ATK:Fetch Action from MCP" in the mcp.json file choose Pre‑fetch tools (for offline IntelliSense) or Dynamic. ATK will list all available MCP actions—check the ones you want in your agent.
+## Getting Started
 
-    > If you need the complete tool definitions including _meta and annotations properties for enabling OAI Apps SDK or MCP Apps implementation, open [MCP Inspector](https://github.com/modelcontextprotocol/inspector?tab=readme-ov-file#running-the-inspector) and retrieve the full details there. Then replace the corresponding schema section in your `ai-plugin.json` file with the full definitions.
+1. **Create a file** `.env.dev` file (use the sample `.env.dev.sample`) inside the **env** folder in the root of the project.
 
-    ![image](https://github.com/user-attachments/assets/9184ddcc-e42c-4fee-bd83-830d199755e6)
+2. **Run the setup commands:**
 
-7. Configure Auth
+    Run all scripts from `src/mcpserver/`
 
-    ATK will retrieve the authentication information for your MCP server and store these values are in env/.env.development and a secure reference is injected into appPackage/ai-plugin.json. If the inputted MCP server authentication information is not configure correctly according to the MCP protocol, ATK will prompt errors.
+    1. **Install dependencies** — run `npm run install:all`
+    2. **Start Azurite** (local storage emulator) — `npm run start:azurite` in a separate terminal
+    3. **Seed the database** — `npm run seed`
+    4. **Build widgets** — `npm run build:widgets`
+    5. **Start the MCP server** — `npm run dev:server` (runs on `http://localhost:3001/mcp`)
+3. **Create a dev tunnel** — Use [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/) to expose your local MCP server publicly:
+    ```bash
+    devtunnel host -p 3001 --allow-anonymous
+    ```
+    Copy the forwarded URL (e.g. `https://<tunnel-id>.devtunnels.ms`) and update the `url` field under the `RemoteMCPServer` runtime in `appPackage/ai-plugin.json`:
+    ```json
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "spec": {
+                "url": "https://<your-tunnel-url>/mcp"
+            }
+        }
+    ]
+    ```
+4. Inside **src/mcpserver** folder  **create your `.env` file** — copy `.env.sample`:
+    ```bash
+    cp .env.sample .env
+    ```
+    > This file contains the Azure Table Storage connection string and server port used by the MCP server. The defaults in `.env.sample` are pre-configured for local Azurite development.
 
-8. Review generated files
+5. **Provision** — Use the **Provision** button from Agents Toolkit's **LifeCycle** panel.
 
-    - `appPackage/ai-plugin.json` (function definitions, runtime spec + auth) - This file defines the the action or operations that Copilot can interact with.
-    - `appPackage/declarativeAgent.json` (agent configuration & sample prompts) - This file is the definition of your declarative agent
-    - `appPackage/manifest.json` (Teams/Outlook integration)
+## Test the agent
 
-9. Provision & debug
-
-    Use the Provision button in ATK to create resources. ATK will detect if your MCP server requires OAuth2 or API‐Key. Provide your Client ID/Secret or Key when prompted. Then Start Debugging to Preview agent in Copilot in Edge/Chrome. Your DA will appear under Copilot chats.
-
-10. Test your MCP‑powered agent 
-
-    Open the Copilot pane, select your agent and invoke any of the MCP tools with natural‑language prompts. 
+1. Open your browser and go to [https://m365.cloud.microsoft/chat](https://m365.cloud.microsoft/chat).
+2. Select your agent in the left-hand sidebar. If you don't see your agent, select **All agents**.
+3. Ask the agent to do something that invokes your MCP server, use above table for reference to sample prompts.
+4. Allow the agent to connect to the MCP server when prompted.
+5. The agent renders the UI widget.
 
 ## Project Structure
 
-| Folder       | Description                                                                                 |
-| ------------ | ---------------------------------------------------------------------------------------- |
-| `.vscode`    | ATK debug & .vscode/mcp.json for MCP server config                                                               |
-| `appPackage` | - `appPackage/ai-plugin.json` (function definitions, runtime spec + auth) - This file defines the the action or operations that Copilot can interact with<br>- `appPackage/declarativeAgent.json` (agent configuration & sample prompts) - This file is the definition of your declarative agent<br>- `appPackage/manifest.json` (Teams/Outlook integration)   |
-| `env`        | Local environment files (.env.development, .env.local)                                                                         |
-| `m365agents.yml` | Defines your DA stages & lifecycle for ATK  |
-
-## MCP‑specific tips
-
-- **Discovery URL**: your MCP server’s /discover endpoint must expose JSON‑Schema for every action.
-- **Tool selection**: the run_for_functions array in ai-plugin.json limits which MCP tools your agent can call.  
-
-- **Auth flows**: ATK supports both OAuth2.1 and API‑Key; you don’t need to hand‑edit auth blocks.  
-
-- **Versioning**: when your MCP server schema changes, simply rerun ATK: Fetch Action from MCP to refresh your plugin file.  
-
-- **Error logging**: basic request/response logs appear in the ATK console; errors bubble up in your Copilot chat. 
-
+| Folder | Description |
+|--------|-------------|
+| `appPackage/` | Agent manifests — `ai-plugin.json` (tool definitions & auth), `declarativeAgent.json` (agent config), `manifest.json` (Teams/Outlook integration) |
+| `src/mcpserver/server/` | MCP server — Express + StreamableHTTP transport, Azure Table Storage data layer |
+| `src/mcpserver/widgets/` | React 18 + Fluent UI v9 widgets built as single-file HTML via MCP Apps (`@modelcontextprotocol/ext-apps`) — claims dashboard, claim detail, contractors list |
+| `src/mcpserver/db/` | Seed data (JSON) |
+| `env/` | Local environment files |
+| `m365agents.yml` | ATK lifecycle configuration |
 
 ## Learn More
 
-- [Build Declarative Agents (official docs)](https://learn.microsoft.com/microsoft-365-copilot/extensibility/build-declarative-agents)
-
+- [Build Declarative Agents](https://learn.microsoft.com/microsoft-365-copilot/extensibility/build-declarative-agents)
+- [Build Declarative Agents for Microsoft 365 Copilot with MCP](https://devblogs.microsoft.com/microsoft365dev/build-declarative-agents-for-microsoft-365-copilot-with-mcp/)
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
-
-- [Agents Toolkit guide on GitHub](https://github.com/OfficeDev/TeamsFx/wiki/Teams-Toolkit-Visual-Studio-Code-v5-Guide#overview)
-
-Happy building! 
-
-With MCP + Declarative Agents, you’ll have a turnkey path from your existing APIs to a fully operational Copilot‑powered experience. 
+- [MCP Apps](https://github.com/modelcontextprotocol/ext-apps)
