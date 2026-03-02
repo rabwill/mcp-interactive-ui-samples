@@ -40,10 +40,11 @@ MCP server for managing HR consultants, projects, and assignments with Fluent UI
 
 | Prompt | What it does |
 |---|---|
-| Show the HR dashboard. | Displays the full HR dashboard widget. |
-| Show me the profile for consultant 1. | Renders a consultant profile card. |
-| Open the bulk editor. | Opens the bulk assignment editor. |
-| Show me project details for project 1. | Displays a project detail view. |
+| Show the HR dashboard. | Opens the HR consultant dashboard widget. |
+| I need a React developer for the Copilot project at Consolidated Messenger. Find someone with React skills, show me their profile, and assign them as a Developer. | Searches consultants by skill, displays a profile card, and assigns the consultant to a project — all by name, no IDs needed. |
+| Show me the HR dashboard filtered to only billable assignments. Which consultants have the most forecasted hours, and are any of them over-allocated? | Opens the interactive dashboard with a billable filter applied, then the AI analyzes forecast data across consultants to surface workload insights. |
+| We need to staff the Disaster Recovery project at Relecloud. Show me the project details, then find all consultants who have Python or Java skills and bulk-assign them as Developers at $120/hr. | Chains project lookup, skill-based consultant search, and bulk assignment in a single conversation — replacing multiple clicks across an HR system. |
+| Compare Avery Howard and Sanjay Puranik — show me both their profiles side by side. Who has more certifications, and which projects are they currently assigned to? | Fetches two consultant profiles by name and synthesizes a comparison of certifications, skills, and active assignments. |
 
 ---
 
@@ -58,10 +59,14 @@ MCP server for insurance claims management with claims dashboard, claim detail w
 
 | Prompt | What it does |
 |---|---|
-| Show me all insurance claims. | Displays the claims dashboard. |
-| Show me claim CN202504990. | Renders a detailed claim view with map. |
-| Show me all contractors. | Lists available contractors. |
-| Approve claim 3 and add a note 'Verified by adjuster'. | Approves a claim with notes. |
+| Show the claims dashboard. | Opens the claims dashboard widget with all claims, status metrics, and click-to-detail. |
+| Show me all open claims sorted by estimated loss from highest to lowest. | Opens the dashboard filtered to open claims and sorted by estimated loss descending — quickly surfaces the highest-value open claims. |
+| Show me Kimberly King's claim details, and tell me what inspections are pending. | Fetches the claim detail widget for the specific policy holder and summarizes pending inspection status. |
+| Show me the preferred roofing contractors. | Opens the contractors list filtered to preferred roofing specialists — useful when assigning repair work on storm or roof damage claims. |
+| Approve claim 2 with a note that all documentation has been verified, then show me the updated dashboard. | Updates the claim status to Approved, adds a note, and re-opens the dashboard so you can confirm the change — a multi-step workflow in one prompt. |
+| Create a high-priority initial inspection for claim CN202504990 scheduled for next Monday, and assign it to an inspector who specializes in fire damage. | Lists inspectors, picks one with fire damage specialization, and creates the inspection — chains three tools automatically. |
+| Which claims have the highest estimated losses? Show me the top ones and compare their damage types. | Opens the dashboard sorted by estimated loss descending, then the AI analyzes damage types across high-value claims to surface patterns. |
+| Show the claim detail for claim 1. Then approve the pending purchase order and mark the inspection as completed with findings noting that all repairs are satisfactory. | Chains claim detail view, purchase order approval, and inspection update in one conversation — replaces multiple manual steps. |
 
 ---
 
