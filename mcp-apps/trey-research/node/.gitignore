@@ -1,6 +1,7 @@
 # TeamsFx files
 env/.env.*.user
 env/.env.local
+env/.env.dev
 .localConfigs
 appPackage/build
 
@@ -18,3 +19,4 @@ appPackage/.generated
 
 .azurite
 src/mcpserver/assets/ 
+
